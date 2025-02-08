@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import static com.example.books.TestData.testBook;
+import static com.example.books.TestData.testBookEntity;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,11 +29,7 @@ public class BookServiceImplTest {
 
     @Test
     public void testThatBookIsSaved() {
-        final Book book = Book.builder()
-            .isbn("02345678")
-            .author("Virginia Woolf")
-            .title("The Waves")
-            .build();
+        final Book book = testBook()
 
             final BookEntity bookEntity = BookEntity.builder()
             .isbn("02345678")
