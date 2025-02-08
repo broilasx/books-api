@@ -29,13 +29,9 @@ public class BookServiceImplTest {
 
     @Test
     public void testThatBookIsSaved() {
-        final Book book = testBook()
+        final Book book = testBook();
 
-            final BookEntity bookEntity = BookEntity.builder()
-            .isbn("02345678")
-            .author("Virginia Woolf")
-            .title("The Waves")
-            .build();
+            final BookEntity bookEntity = testBookEntity();
 
             when(bookRepository.save(eq(bookEntity))).thenReturn(bookEntity);
 
