@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import static com.example.books.TestData.testBook;
 import static com.example.books.TestData.testBookEntity;
 
@@ -37,5 +39,14 @@ public class BookServiceImplTest {
 
             final Book result = underTest.create(book);
             assertEquals(book, result);
+    }
+
+    @Test
+    public void testThatFindByIdReturnsEmptyWhenNoBook(){
+        final String isbn = "123123123";
+        when(bookRepository.findById(eq(isbn))).thenReturn(Optional.empty());
+
+        final Optional<Book> result = underTest.findById(isbn);
+        assertEquals(Optional.empty(), result);
     }
 }
