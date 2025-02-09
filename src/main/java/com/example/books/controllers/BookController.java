@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.books.domain.Book;
 import com.example.books.services.BookService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -35,10 +36,8 @@ public class BookController {
 
     }
 
-    @GetMapping(path = "/books/{isbn}")
-    public ResponseEntity<Book> retrieveBook(@PathVariable final String isbn) {
-        final Optional<Book> foundBook = bookService.findById(isbn);
-        return foundBook.map(book -> new ResponseEntity<Book>(book, HttpStatus.OK))
-            .orElse(new ResponseEntity<Book>(HttpStatus.NOT_FOUND));
+    @GetMapping(path = "/books")
+    public ResponseEntity<List<Book>> listBooks() {
+        return new ResponseEntity<List<Book>>(bookService.listBooks(), HttpStatus.OK);
     }
 }
