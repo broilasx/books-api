@@ -70,4 +70,16 @@ public class BookControllerTest {
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
+
+    @Test
+    public void testThatListBooksReturnsHttp200AndBooksWhenBooksExist() throws Exception {
+        final Book book = TestData.testBook();
+        bookService.create(book);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.[0].isbn").value(book.getIsbn()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.[0].title").value(book.getTitle()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.[0].author").value(book.getAuthor()));
+    }
 }
