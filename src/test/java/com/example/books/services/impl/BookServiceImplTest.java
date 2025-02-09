@@ -49,4 +49,15 @@ public class BookServiceImplTest {
         final Optional<Book> result = underTest.findById(isbn);
         assertEquals(Optional.empty(), result);
     }
+
+    @Test
+    public void testThatFindByIdReturnsBookWhenExists(){
+        final Book book = testBook();
+        final BookEntity bookEntity = testBookEntity();
+
+        when(bookRepository.findById(eq(book.getIsbn()))).thenReturn(Optional.of(bookEntity));
+
+        final Optional<Book> result = underTest.findById(book.getIsbn());
+        assertEquals(Optional.of(book), result);
+    }
 }
