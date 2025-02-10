@@ -7,6 +7,8 @@ import com.example.books.domain.Book;
 
 public interface BookService {
 
+    boolean isBookExists(Book book);
+    
     Book create(Book book);
 
     Optional<Book> findById(String isbn);
