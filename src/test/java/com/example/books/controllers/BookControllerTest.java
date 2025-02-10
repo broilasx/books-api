@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester.MockMvcRequestBuilder;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class BookControllerTest {
     
     @Autowired
@@ -55,7 +58,7 @@ public class BookControllerTest {
     @Test
     public void testThatRetrieveBookReturnsHttp200AndBookWhenExists() throws Exception {
         final Book book = TestData.testBook();
-        bookService.create(book);
+        bookService.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/books/" + book.getIsbn()))
         .andExpect(MockMvcResultMatchers.status().isOk())
@@ -74,7 +77,7 @@ public class BookControllerTest {
     @Test
     public void testThatListBooksReturnsHttp200AndBooksWhenBooksExist() throws Exception {
         final Book book = TestData.testBook();
-        bookService.create(book);
+        bookService.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/books/"))
         .andExpect(MockMvcResultMatchers.status().isOk())

@@ -30,9 +30,15 @@ public class BookController {
         @PathVariable final String isbn, 
         @RequestBody final Book book){
             book.setIsbn(isbn);
-            final Book savedBook = bookService.create(book);
-            final ResponseEntity<Book> response = new ResponseEntity<Book>(book, HttpStatus.CREATED);
-            return response;
+            final boolean isBookExists = bookService.isBookExists(book);
+            final Book savedBook = bookService.save(book);
+            
+            if(isBookExists) {
+                return new ResponseEntity<Book>(savedBook, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Book>(savedBook, HttpStatus.CREATED);
+
+            }
 
     }
 
