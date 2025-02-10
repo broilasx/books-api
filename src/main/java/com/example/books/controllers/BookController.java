@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @PutMapping(path = "/books/{isbn}")
-    public ResponseEntity<Book> createBook(
+    public ResponseEntity<Book> createUpdateBook(
         @PathVariable final String isbn, 
         @RequestBody final Book book){
             book.setIsbn(isbn);
