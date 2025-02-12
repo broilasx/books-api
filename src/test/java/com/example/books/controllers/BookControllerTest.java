@@ -43,7 +43,8 @@ public class BookControllerTest {
         final String bookJson = objectMapper.writeValueAsString(book);
         mockMvc.perform(MockMvcRequestBuilders.put("/books/" + book.getIsbn())
         .contentType(MediaType.APPLICATION_JSON)
-        .content("application/json"))
+        .content(bookJson))
+        .andExpect(MockMvcResultMatchers.status().isCreated())
         .andExpect(MockMvcResultMatchers.jsonPath("$.isbn").value(book.getIsbn()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(book.getTitle()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.author").value(book.getAuthor()));
@@ -90,11 +91,16 @@ public class BookControllerTest {
     @Test
     public void testeThatBookIsUpdatedReturnsHTTP201() throws Exception {
         final Book book = TestData.testBook();
+        bookService.save(book);
+
+        book.setAuthor("Virginia Wolf");
+
         final ObjectMapper objectMapper = new ObjectMapper();
         final String bookJson = objectMapper.writeValueAsString(book);
         mockMvc.perform(MockMvcRequestBuilders.put("/books/" + book.getIsbn())
         .contentType(MediaType.APPLICATION_JSON)
-        .content("application/json"))
+        .content(bookJson))
+        .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.isbn").value(book.getIsbn()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(book.getTitle()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.author").value(book.getAuthor()));
