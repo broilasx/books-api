@@ -37,7 +37,7 @@ public class BookControllerTest {
     private BookService bookService;
 
     @Test
-    public void testeThatBookIsCreated() throws Exception {
+    public void testeThatBookIsCreatedReturnsHTTP200() throws Exception {
         final Book book = TestData.testBook();
         final ObjectMapper objectMapper = new ObjectMapper();
         final String bookJson = objectMapper.writeValueAsString(book);
@@ -84,5 +84,19 @@ public class BookControllerTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.[0].isbn").value(book.getIsbn()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.[0].title").value(book.getTitle()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.[0].author").value(book.getAuthor()));
+    }
+
+
+    @Test
+    public void testeThatBookIsUpdatedReturnsHTTP201() throws Exception {
+        final Book book = TestData.testBook();
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String bookJson = objectMapper.writeValueAsString(book);
+        mockMvc.perform(MockMvcRequestBuilders.put("/books/" + book.getIsbn())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content("application/json"))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.isbn").value(book.getIsbn()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(book.getTitle()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.author").value(book.getAuthor()));
     }
 }
