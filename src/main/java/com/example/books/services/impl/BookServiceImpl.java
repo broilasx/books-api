@@ -6,6 +6,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.books.domain.Book;
@@ -13,7 +14,10 @@ import com.example.books.domain.BookEntity;
 import com.example.books.repositories.BookRepository;
 import com.example.books.services.BookService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class BookServiceImpl implements BookService{
 
     private final BookRepository bookRepository;
@@ -67,6 +71,11 @@ public class BookServiceImpl implements BookService{
     @Override
     public void deleteBookById(String isbn) {
         bookRepository.deleteById(isbn);
+        try{
+            bookRepository.deleteById(isbn);
+        }catch(final EmptyResultDataAccessException ex) {
+            log.debug("attemped to delete non-existing book", ex);
+        }
     }
     
 }
