@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -91,5 +93,12 @@ public class BookServiceImplTest {
         when(bookRepository.existsById(any())).thenReturn(false);
         final boolean result = underTest.isBookExists(testBook());
         assertEquals(true, result);
+    }
+
+    @Test
+    public void testDeleteBookDeletesBook(){
+        final String isbn = "13123123";
+        underTest.deleteBookById(isbn);
+        verify(bookRepository, times(1)).deleteById(eq(isbn));
     }
 }
