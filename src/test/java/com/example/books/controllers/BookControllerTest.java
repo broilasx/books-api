@@ -70,7 +70,7 @@ public class BookControllerTest {
 
     @Test
     public void testThatListBooksReturnsHttp200EmptyListWhenNoBooksExist() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/books"))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
@@ -80,7 +80,7 @@ public class BookControllerTest {
         final Book book = TestData.testBook();
         bookService.save(book);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/books"))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.[0].isbn").value(book.getIsbn()))
         .andExpect(MockMvcResultMatchers.jsonPath("$.[0].title").value(book.getTitle()))
