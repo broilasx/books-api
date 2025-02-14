@@ -108,7 +108,7 @@ public class BookControllerTest {
 
     @Test
     public void testThatHttp204IsReturnedWhenBookDoenstExist() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/21312312"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/books/21321213"))
         .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 

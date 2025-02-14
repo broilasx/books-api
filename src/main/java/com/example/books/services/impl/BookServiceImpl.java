@@ -70,7 +70,6 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public void deleteBookById(String isbn) {
-        bookRepository.deleteById(isbn);
         try{
             bookRepository.deleteById(isbn);
         }catch(final EmptyResultDataAccessException ex) {

@@ -92,6 +92,13 @@ public class BookServiceImplTest {
     public void testBookExistsReturnsFalseWhenBookDoesntExist() {
         when(bookRepository.existsById(any())).thenReturn(false);
         final boolean result = underTest.isBookExists(testBook());
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void testBookExistsReturnsTrueWhenBookDoesntExist() {
+        when(bookRepository.existsById(any())).thenReturn(true);
+        final boolean result = underTest.isBookExists(testBook());
         assertEquals(true, result);
     }
 
